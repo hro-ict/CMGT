@@ -37,6 +37,7 @@ class Welcome extends CI_Controller {
 	public function news(){
 		$this->load->view("navbar2.php");
 		$this->load->view("news.html");
+		
 
 	}
 
