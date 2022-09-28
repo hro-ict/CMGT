@@ -29,4 +29,8 @@
                         <button type="submit" class="btn btn-primary">Submit</button>
                       </form>
           </div>
+<<<<<<< HEAD
 @endsection
+=======
+@endsection
+>>>>>>> login page added
