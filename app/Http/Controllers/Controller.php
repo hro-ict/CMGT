@@ -13,6 +13,8 @@ class Controller extends BaseController
 
 
     public function test(){
+
+        return "Hello World" 
         
     }
 }
