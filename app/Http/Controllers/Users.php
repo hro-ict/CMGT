@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class Users extends Controller
 {
-    public function register(Request $request){
+    public function create_user(Request $request){
         $firstname= htmlspecialchars($request->firstname);
         $lastname= htmlspecialchars($request->lastname);
         $email= htmlspecialchars($request->email);

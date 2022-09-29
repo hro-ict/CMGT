@@ -5,7 +5,7 @@
        @if($errors->any())
        <h3 class="alert-danger text-center">Registration is not succesfull</h3>
        @endif
-            <form method="post" enctype="multipart/form-data"  action="{{route('save_register')}}">
+            <form method="post" enctype="multipart/form-data"  action="{{route('create_user')}}">
                 @csrf
                       <div class=" col-md-6 mb-3 mt-3">
                         <label for="firstname" class="form-label">Firstname:</label>
