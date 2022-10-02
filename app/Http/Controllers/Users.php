@@ -41,4 +41,8 @@ class Users extends Controller
         
 
     }
+
+    public function check_login(){
+        
+    }
 }
