@@ -1,8 +1,10 @@
 <?php
-
+namespace App\Listeners;
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use App\Models\User;
+
 
 class Users extends Controller
 {
@@ -36,13 +38,50 @@ class Users extends Controller
              ]);
         $data= compact("firstname","lastname","email","password","username","foto","role_id", "created_at");
              
-         Users::create($data);
+         User::create($data);
          return redirect()->to("/login");
         
 
     }
 
-    public function check_login(){
+    public function check_login(Request $request){
+        $username= $request->username;
+        $password= $request->password;
+
+  
+        
+
+       
+        if (Users::where('username', $username)->exists()) {
+            $data= Users::where("username", $username)->get()[0];
+            // $check_pass= Users::where("password", Hash::make($password));
+            // print_r($check_pass);die();
+            
+ 
+            if (md5($password)==$data->password){
+                $session_data= array(
+                    "username"=>$username,
+                    "name"=>$data->firstname." ".$data->lastname,
+                    "foto"=>$data->foto,
+                    "role"=>$data->role,
+                    "login_count"=>$data->login_count
+                );
+                Session::put("session", $session_data);
+
+
+               return redirect()->to("/");
+        
+            }  
+            else{
+                return redirect()->to("/login")->with(["message"=>"login is failed"]);  
+             }  
+         }
+        else{
+           return redirect()->to("/login")->with(["message"=>"login is failed"]);  
+        }
+       
+        // Session::forget("username");
+
         
     }
 }
