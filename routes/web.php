@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Users;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +15,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('articles');
 });
 
 
-
+Route::get("/login", function(){
+  return view("login");
+});
 Route::get("/register", function(){
     return view("register");
 });
 
-Route::post("/create_user",[News::class, 'create_user'])->name('create_user');
+Route::post("/create_user",[Users::class, 'create_user'])->name('create_user');
