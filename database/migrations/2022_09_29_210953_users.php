@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text("password")->nullable();
             $table->text("email")->nullable();
             $table->integer("role_id")->nullable();
-            $table->text("created_at")->nullable();
+             $table->timestamps();
 
         });
     }
