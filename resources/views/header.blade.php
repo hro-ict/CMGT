@@ -1,32 +1,24 @@
-@extends('master')
-@section('content')
-<div class="container mt-5 p-5 mx-auto">
-            
-            <h1>Login Form</h1>
-         
-            @isset($message)
-             <h1>{{$message}}</h1>
-            @endisset
-                
-        
-          
-            <form class="col-12 col-md-9" method="post" action="{{route('check_login')}}">
-              @csrf
-                        <div class="mb-3 mt-5">
-                        <label for="username" class="form-label">Username:</label>
-                        <input type="text" class="form-control" id="username" placeholder="Enter username" name="username">
-                        </div>
-                       
-                        <div class="mb-3">
-                          <label for="password" class="form-label">Password:</label>
-                          <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
-                        </div>
-                        <div class="form-check mb-0">
-                          <label class="form-check-label">
-                          </label>
-                        </div>
-            
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                      </form>
-          </div>
-@endsection
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Articles</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script> --}}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('js/index.js') }}"></script>
+<script src="{{ asset('js/switch.js') }}"></script>
+<script src="https://kit.fontawesome.com/85d7a8397a.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
+
+ 
+<body>
+</head>
+<body>
