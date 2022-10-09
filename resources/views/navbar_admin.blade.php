@@ -24,8 +24,7 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{{ route('get_all_users') }}">All Users</a></li>
               <li><a class="dropdown-item" href="{{ route('get_all_articles') }}">All Articles</a></li>
-              <li><a class="dropdown-item" href="/create_article">Write a article</a></li>
-              <li><a class="dropdown-item" href="{{route('get_user_articles', Session::get('session')['username'])}}">Change Password</a></li>
+              <li><a class="dropdown-item" href="{{ route('change_password') }}">Change Password</a></li>
             </ul>
           </div>
 
