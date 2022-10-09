@@ -3,10 +3,17 @@
 <div class="container mt-5 p-5 mx-auto">
             
             <h1>Login Form</h1>
-         
-            @isset($message)
-             <h1>{{$message}}</h1>
+            @if($errors->any())
+            @foreach($errors->all() as $error)
+            <li class="alert alert-danger">{{$error}}</li>
+            @endforeach
+            @endif
+            @isset($response)
+            @if ($response=="failed")
+             <h3 class="alert alert-danger">Invalid Password or Username</h3>
+            @endif 
             @endisset
+        
                 
         
           
@@ -27,10 +34,27 @@
                         </div>
             
                         <button type="submit" class="btn btn-primary">Submit</button>
+                        <a href="/forgot_password"><button type="button" class="btn btn-secondary float-end">Forgot Password</button></a>
                       </form>
           </div>
-<<<<<<< HEAD
+ @isset($response)
+       @if ($response=="success")
+       <script>
+             Swal.fire(
+                'password reset successfully',
+                '',
+                'success'
+                )
+       </script>
+       {{-- @else
+        <script>
+             Swal.fire(
+                'E-mail is not found',
+                '',
+                'error'
+                )
+       </script> --}}
+       
+       @endif
+       @endisset
 @endsection
-=======
-@endsection
->>>>>>> login page added
