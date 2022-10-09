@@ -8,14 +8,13 @@
   .carousel-caption {
     font-size: 25px;
   }
+  mark{
+    background: orange;
+    color: black;
+}
 }
 </style>
 
-
-{{-- test --}}
-
-
-{{-- test --}}
 <div class="container  mt-5 py-5" >
 
  {{-- search    --}}
@@ -31,13 +30,17 @@
             <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Tech">
             <label class="form-check-label" for="inlineCheckbox2">Tech</label>
           </div>
+          <!--<div class="form-check form-check-inline">-->
+          <!--  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Mode" >-->
+          <!--  <label class="form-check-label" for="inlineCheckbox3">Mode</label>-->
+          <!--</div>-->
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Mode" >
-            <label class="form-check-label" for="inlineCheckbox3">Mode</label>
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Culture" >
+            <label class="form-check-label" for="inlineCheckbox3">Culture</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Cultur" >
-            <label class="form-check-label" for="inlineCheckbox3">Cultur</label>
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Finance" >
+            <label class="form-check-label" for="inlineCheckbox3">Finance</label>
           </div>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="General" >
@@ -89,7 +92,7 @@
                 <img  src="{{ asset('images/'.$title->foto) }}" alt="" class="d-block w-100">
                 <div class="carousel-caption mb-0 " >
                     <span class=" text-left  fw-bold"><a class="text-decoration-none text-white fw-bold" href='{{route("get_article", $title->id)}}'>{{$title->title}}</a></span><br>
-                    <small class=" text-danger  fw-bold">{{ $title->author_name}}</small>
+                    <small class=" text-danger  fw-bold">{{ $title->get_user->firstname. " ".$title->get_user->lastname}}</small>
                 </div>
               </div>
               @else 
@@ -99,7 +102,7 @@
                     <span class=" text-left  fw-bold">
                         <a class="text-decoration-none text-white fw-bold" href='{{route("get_article", $title->id)}}'>{{$title->title}}</a>
                     </span><br>
-                    <small class=" text-danger  fw-bold">{{ $title->author_name}}</small>
+                    <small class=" text-danger  fw-bold">{{ $title->get_user->firstname. " ".$title->get_user->lastname}}</small>
                 </div>
                 
               </div>
@@ -123,7 +126,7 @@
 </div>
 
 
-
+ {{-- test2 --}}
 
 <div class="row row-cols-1   gy-3">
     @php 
@@ -146,14 +149,14 @@
                             <td class="table-info ">
                                 {{-- <i class="bi bi-pen" style="color:red">   --}}
                                     <i class="fa-sharp fa-solid fa-pen" style="color:red"></i> 
-                                <small >{{ $title->author_name }}</small> 
+                                <small >{{ $title->get_user->firstname. ' '. $title->get_user->lastname }}</small> 
                                
                              
                             </td>
                          
                             <td class="table-secondary">
                                 <i class="fa-regular fa-newspaper" style="color:green"></i> 
-                                <small >{{ $title->category }}</small>
+                                <small >{{ $title->get_category->category }}</small>
                             </td>
                         </tr>
                     </table>
@@ -184,6 +187,13 @@
 
 
 <script>
+
+
+// $.ajaxSetup({
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         }
+//     });
     String.prototype.format = function() {
         var newStr = this, i = 0;
         while (/%s/.test(newStr))
@@ -211,13 +221,20 @@
             // placeholder_end
             
           
-            send_data=  {category: $( this ).val()}
-            $.getJSON("http://152.70.56.180:9001/get_category", send_data,  function(data){
+            category= {category: $( this ).val()}
+            $.get("http://152.70.56.180:9001/get_category", category, function(data)
+            {
+                //data= JSON.parse(data);
+             console.log(data)
              data.forEach(function(index){
+                 console.log(index);
             //   console.log(index.title)
               // $("#content").append(index.title+"<br>")
-              html=  '<div class="col col-md-8 mx-auto mt-5"><div class="card h-100"><div class="card-body"><h5><a class="text-decoration-none link-dark " href="/get_article/%s">%s</a></h5><div class="card-subtitle mt-5  "><table class="table table-responsive table table-sm float-end position-absolute bottom-0 end-0 w-auto"><tr><td class="table-info "> <i class="fa-sharp fa-solid fa-pen" style="color:red"></i><small >%s</small> </td><td class="table-secondary"><i class="fa-regular fa-newspaper" style="color:green"></i><small >%s</small></td></tr></table>'.format(index.id,index.title,index.author_name,index.category)
-              $("#content").append(html)
+              html=  '<div class="col col-md-8 mx-auto mt-5"><div class="card h-100"><div class="card-body"><h5><a class="text-decoration-none link-dark " href="/get_article/%s">%s</a></h5><div class="card-subtitle mt-5  "><table class="table table-responsive table table-sm float-end position-absolute bottom-0 end-0 w-auto"><tr><td class="table-info "> <i class="fa-sharp fa-solid fa-pen" style="color:red"></i><small >%s %s</small> </td><td class="table-secondary"><i class="fa-regular fa-newspaper" style="color:green"></i><small >%s</small></td></tr></table>'.format(index.id,index.title,index.get_user.firstname,index.get_user.firstname,index.get_category.category)
+              if (index.status=="true"){
+                $("#content").append(html)
+              }
+            
               
               
              })
@@ -238,27 +255,40 @@
   
     
     $("#search_btn").click(function(){
+     
       search= $("#search").val()
+     
+      if (search.trim().length>0){
+           $("#content").empty()
+           $( ".form-check-input").prop('checked', false)
+      }
       send_data= {search:search}
-      $.getJSON("http://152.70.56.180:9001/get_category", send_data, function(data){
-        // console.log(data);
-        console.log(search)
+      console.log(send_data)
+      $.get("http://152.70.56.180:9001/get_category", send_data, function(data){
+    console.log(data);
+    //     console.log(search)
+        counter=0;
         data.forEach(function(index){
           if (index.text?.includes(search) || index.title?.includes(search)){
-            console.log(index.title);
+            counter+=1;
+            html=  '<div class="col col-md-8 mx-auto mt-5"><div class="card h-100"><div class="card-body"><h5><a target="_blank" class="text-decoration-none link-dark " href="/get_article/%s/%s">%s</a></h5><div class="card-subtitle mt-5  "><table class="table table-responsive table table-sm float-end position-absolute bottom-0 end-0 w-auto"><tr><td class="table-info "> <i class="fa-sharp fa-solid fa-pen" style="color:red"></i><small >%s %s</small> </td><td class="table-secondary"><i class="fa-regular fa-newspaper" style="color:green"></i><small >%s</small></td></tr></table>'.format(index.id,search,index.title,index.get_user.firstname,index.get_user.firstname,index.get_category.category)
+              if (index.status=="true"){
+                $("#content").append(html)
+              }
+              
           }
+          
+          var context = document.querySelector("#content");
+          var instance = new Mark(context);
+          instance.mark(search)
+        
         })
+          if (counter==0) {
+            $("#content").html("<h1 class='alert alert-danger mt-5 text-center'>Found nothing</h1>")
+          }
       })
     })
     </script>
     
-    
-    
-    
-
-
-
-
-
 
 @endsection
