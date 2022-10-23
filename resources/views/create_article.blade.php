@@ -3,19 +3,34 @@
 @section('content')
 <div class="container mt-5 p-5">
 
-  {{-- {{Session::get("session")}} --}}
+<!--  {{-- {{Session::get("session")}} --}}-->
 
-  {{-- @if (Session::has('session') and Session::get('session')['comment_count']<3)
-  <h1 class="alert-danger mt-5">
-    In order to write an article, you must leave 3 comments.Your total number of comments: {{ Session::get('session')['comment_count'] }}
-  </h1>
-@else --}}
+<!--  {{-- @if (Session::has('session') and Session::get('session')['comment_count']<3)-->
+ 
+<!--  <h1 class="alert-danger mt-5">-->
+<!--    In order to write an article, you must leave 3 comments.Your total number of comments: {{ Session::get('session')['comment_count'] }}-->
+<!--  </h1>-->
+<!--@else --}}-->
 
 @isset ($comment_count)
 @if ($comment_count<3)
-<h1 class="alert-danger mt-5">
-    In order to write an article, you must leave 3 comments.Your total number of comments: {{ $comment_count }}
-  </h1>
+ <script>
+             Swal.fire(
+                'In order to write an article, you must leave 3 comments.Your total number of comments:\n<h1 class="badge badge-primary">'+{{$comment_count}}+'</h1>',
+                '',
+                'warning'
+                )
+       Swal.fire({
+  icon: 'warning',
+  confirmButtonText: 'OK',
+  html: '<h5>In order to write an article, you must  leave at least 3 comments. Your total number of comments:</h5><h1><span class="badge badge-primary">'+{{$comment_count}}+'</span></h1>',
+}).then((result)=>{
+if(result.isConfirmed){
+location.href="/"
+}
+
+})
+       </script>
 @else
 <form method="post" enctype="multipart/form-data"  action="{{route('save_article')}}">
             @csrf
