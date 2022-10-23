@@ -121,16 +121,25 @@ class Users extends Controller
         // return redirect()->to("/login");
        }
        
-       public function delete_user(Request $request){
+   public function delete_user(Request $request){
+   $id= $request->id;
+
+   
+
+   
   if($request->id){
     $id= $request->id;
     $query= Users::where('id', $id)->delete();
+    Comments::where("user_id", $id)->delete();
+    Articles::where("user_id", $id)->delete();
      return $query;
   }
   else {
       if (Session::has('session')){
           $id= Session::get('session')["id"];
            $query= Users::where('id', $id)->delete();
+           Comments::where("user_id", $id)->delete();
+           Articles::where("user_id", $id)->delete();
            if ($query==1){
                Session::forget("session");
                return $query;
