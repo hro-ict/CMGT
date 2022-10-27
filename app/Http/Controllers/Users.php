@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Users;
@@ -64,13 +62,13 @@ class Users extends Controller
 
     }
 
-//controller__users
+
     public function logout(){
-        Session::forget("session");
+        Session::forget("session"); //end session if user logout
         return redirect()->to('/');
     }
 
-//controller__users
+    //register user
     public function save_register(Request $request){
         $firstname= htmlspecialchars($request->firstname);
         $lastname= htmlspecialchars($request->lastname);
@@ -105,7 +103,7 @@ class Users extends Controller
         
     }
     
-    
+    //list all user on admin panel
     public function get_all_users(){
        if (Session::has('session') and Session::get('session')['role']=="admin"){
         $users= Users::with("get_role")->orderBy('created_at', 'desc')->get();
@@ -123,10 +121,6 @@ class Users extends Controller
        
    public function delete_user(Request $request){
    $id= $request->id;
-
-   
-
-   
   if($request->id){
     $id= $request->id;
     $query= Users::where('id', $id)->delete();
@@ -152,12 +146,12 @@ class Users extends Controller
 }
 
 
-  //controller__users
+
 public function forgot_password(Request $request){
     global $email;
     $email= $request->email;
     
-
+      //send mail to user for password recovery
      if (Users::where('email', $email)->exists()){
          $token= bin2hex(random_bytes(16));
          $user_id= Users::where("email", $email)->get()[0]->id;
@@ -184,7 +178,7 @@ public function forgot_password(Request $request){
     } 
 }
 
-  //controller__users
+
 public function change_password (Request $request){
     $password= $request->password;
     $current_password= $request->current_password;
@@ -210,8 +204,7 @@ public function change_password (Request $request){
         }
 
 }
-
-  //controller__users
+    
 public function update_password(Request $request){
     $id= $request->user_id;
     
@@ -225,15 +218,9 @@ public function update_password(Request $request){
         return view("login", ["response"=>"success"]);
 
 }
-
-
-
- 
     
 }
     
 }
-    
-    
-    
+        
 }
