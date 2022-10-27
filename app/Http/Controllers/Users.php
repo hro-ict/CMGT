@@ -124,8 +124,8 @@ class Users extends Controller
   if($request->id){
     $id= $request->id;
     $query= Users::where('id', $id)->delete();
-    Comments::where("user_id", $id)->delete();
-    Articles::where("user_id", $id)->delete();
+    Comments::where("user_id", $id)->delete(); //delete user comments
+    Articles::where("user_id", $id)->delete(); // delete user articles
      return $query;
   }
   else {
