@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Users;
@@ -39,7 +37,7 @@ class Articles extends Controller
       return view("create_article", ["comment_count"=>$comment_count]);
     }
     else {
-        return abort(404);
+        return abort(404); //return 404 page
          }
     }
     
@@ -68,11 +66,10 @@ class Articles extends Controller
 
     }
     
+    //get article text with id or with search function
     public function get_article($id, $search= null){
        
         $article_data= Articles::where("id", $id)->with('get_user')->get()[0];
-        
-
         $title= $article_data->title;
         $text= $article_data->text;
         $author_name= $article_data->get_user->firstname." ".
@@ -82,16 +79,13 @@ class Articles extends Controller
         $foto= $article_data->foto;
         $data= compact("title","text","author_name", "author_username", "created_at","foto");
         $comment_data= Comments::with("get_user")-> where("title", $title)->get();
-       
-
         return view("get_article", ["data"=>$data, "comment_data"=>$comment_data, "search"=>$search]);
        
     }
     
     public function save_comment(Request $request){
          $request->validate([
-             "comment"=>"required|max:500|min:5",
-             
+             "comment"=>"required|max:500|min:5"
              ]);
           $user_id= $request->user_id;
           $title= $request->title;
@@ -100,10 +94,9 @@ class Articles extends Controller
           $data= compact('user_id','article_id','title','comment');
           Comments::create($data);
           return redirect()->back();
-
-         
-
     }
+    
+    //comment edit
      public function update_comment(Request $request){
         $id= $request->comment_id;
         $comment= $request->comment_body;
@@ -119,6 +112,7 @@ class Articles extends Controller
            return redirect()->back();
     }
     
+   //edit article
     public function update_article(Request $request){
         $id= $request->id;
         $body= $request->body;
@@ -127,7 +121,7 @@ class Articles extends Controller
                ]);
         return $result;
     }
-    
+      //update status of article (active or inactive)
     public function update_article_status(Request $request){
         $id= $request->id;
         $user_email= Articles::find($id)->get_user->email;
@@ -147,6 +141,8 @@ class Articles extends Controller
            else {
                 $data = array("name"=>$name, "status"=>"ACTIVE", "title"=>$title); 
            }
+            
+         //send mail to user about new status of article
          Mail::send('mail_2', $data, function($message) use ($user_email) {
          $message->to($user_email, 'My Articles')->subject
             ('Status your article');
@@ -164,7 +160,7 @@ class Articles extends Controller
   
         $result= Articles::where('id', $id)->delete();
         
-        //send mail to User
+        //send mail to User if article deleted
             if ($result==1){
             $data = array("name"=>$name, "title"=>$title); 
             
@@ -178,7 +174,7 @@ class Articles extends Controller
         return $result;
  }
 
-
+    //list of all articles on admin panel
     public function get_user_articles($username){
         if (Session::has('session')){
             $user_id= Session::get('session')["id"];
@@ -191,7 +187,7 @@ class Articles extends Controller
        
     }
 
-
+//search articles by tag- category
 public function get_category(Request $request){
    if ($request->category){
     $category_id= Categories::where("category", $request->category)->get()[0]->id;
