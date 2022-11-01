@@ -83,7 +83,7 @@ String.prototype.format = function() {
           html=  ' <div class="container"> <div class="row justify-content-center"><div class="col-sm-5 mt-4 me-5 ms-4 ms-md-0 border border-primary border-2 p-4 p-sm-2 "><h3><a href="/get_article/%s">%s</a></h3><img width="30px" height="30px" src="/images/author.png"alt=""><span class="badge rounded-pill bg-info">%s</span> <br><br>  <img width="30px" height="30px" src="/images/category.png"alt=""><span class="badge rounded-pill bg-success">%s</span> <br><br><img width="30px" height="30px" src="/images/date.png" alt=""> <span class="badge rounded-pill bg-danger">%s</span></div></div></div>'.format(index.id,index.title,index.author_name,index.category,index.created_at)
           $("#content").append(html)
           
-          
+         
          })
          
   })
