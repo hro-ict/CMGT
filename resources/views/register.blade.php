@@ -64,6 +64,9 @@
                         <div class="mb-3 col-sm-6">
                         <label for="foto" class="form-label">Profil foto</label>
                         <input class="form-control" name="foto" type="file" id="image"  />
+                        @if ($errors->has('foto'))
+                          <span class="text-danger">{{ $errors }}</span>
+                         @endif
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
