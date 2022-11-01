@@ -33,7 +33,7 @@ class News extends Controller
         return view("test", ["titles"=>$titles]);
     }
 
-//controller__articles
+//get all articles
 
     public function articles() {
         return view("news");
@@ -44,12 +44,12 @@ class News extends Controller
     // }
 
 
-//controller__users
+//user register
     public function register() {
         return view("register");
     }
 
-//controller__users
+//user login check
     public function login(Request $request){
           $request->validate([
              "password"=>"required",
@@ -93,13 +93,13 @@ class News extends Controller
 
     }
 
-//controller__users
+
     public function logout(){
         Session::forget("session");
         return redirect()->to('/');
     }
 
-//controller__users
+
     public function save_register(Request $request){
         $firstname= htmlspecialchars($request->firstname);
         $lastname= htmlspecialchars($request->lastname);
@@ -117,7 +117,7 @@ class News extends Controller
        
  
      
-         
+         //validation of fields
          $request->validate([
              "firstname"=>"required|max:50|min:2",
              "lastname"=>"required|max:50|min:2",
@@ -150,7 +150,7 @@ class News extends Controller
     // }
   
   
-  //controller__articles
+  //user create article
     public function write_article(){
         $all_comments= [];
         if (Session::has('session')&& Session::get('session')["role"]!="admin" ){
@@ -181,7 +181,7 @@ class News extends Controller
     }
     
     
-      //controller__articles
+     
     public function save_article(Request $request){
           $request->validate([
              "title"=>"required|max:100|min:10",
@@ -249,7 +249,7 @@ class News extends Controller
        
     }
 
-  //controller__articles
+
     public function save_comment(Request $request){
          $request->validate([
              "comment"=>"required|max:500|min:5",
@@ -273,7 +273,7 @@ class News extends Controller
     }
 
 
-  //controller__articles
+
     public function update_comment(Request $request){
         $id= $request->comment_id;
         $comment= $request->comment_body;
@@ -284,14 +284,14 @@ class News extends Controller
         //   return redirect()->back();
     }
     
-      //controller__articles
+
      public function delete_comment(Request $request){
            $id= $request->id;
            Comments::where('id', $id)->delete();
            return redirect()->back();
     }
     
-      //controller__articles
+
     public function update_article(Request $request){
         $id= $request->id;
         $body= $request->body;
@@ -302,7 +302,7 @@ class News extends Controller
         //   return redirect()->back();
     }
     
-  //controller__articles
+
     public function update_article_status(Request $request){
         $id= $request->id;
         $user_email= Articles::find($id)->get_user->email;
@@ -324,6 +324,8 @@ class News extends Controller
            else {
                 $data = array("name"=>$name, "status"=>"ACTIVE", "title"=>$title); 
            }
+            
+         // send mail to user for information about status of article
          Mail::send('mail_2', $data, function($message) use ($user_email) {
          $message->to($user_email, 'My Articles')->subject
             ('Status your article');
@@ -332,7 +334,7 @@ class News extends Controller
         }
         return $result;
     }
-      //controller__articles
+
     public function delete_article(Request $request){
         $id= $request->id;
          $user_email= Articles::find($id)->get_user->email;
@@ -344,7 +346,8 @@ class News extends Controller
         //send mail to User
             if ($result==1){
             $data = array("name"=>$name, "title"=>$title); 
-            
+          
+          // send mail to user for information
          Mail::send('mail_3', $data, function($message) use ($user_email) {
          $message->to($user_email, 'My Articles')->subject
             ('Your article removed');
@@ -356,7 +359,7 @@ class News extends Controller
         // return redirect()->back();
  }
 
-  //controller__articles
+  
     public function get_user_articles($username){
         if (Session::has('session')&& Session::get('session')["role"]!="admin"){
             $user_id= Session::get('session')["id"];
@@ -412,7 +415,7 @@ public function get_category(Request $request){
     // }
 
 
-  //controller__users
+  //get all users for admin panel
     public function get_all_users(){
        if (Session::has('session') and Session::get('session')['role']=="admin"){
         $users= Users::with("get_role")->orderBy('created_at', 'desc')->get();
@@ -430,7 +433,7 @@ public function get_category(Request $request){
     
 }
 
-  //controller__articles
+  //get all articles for admin panel
     public function get_all_articles(){
        if (Session::has('session') and Session::get('session')['role']=="admin"){
         $articles= Articles::with("get_user")->orderBy('created_at', 'desc')->get();
@@ -459,6 +462,7 @@ public function delete_user(Request $request){
     Articles::where("user_id", $id)->delete();
      return $query;
   }
+  //if user log-in 
   else {
       if (Session::has('session')){
           $id= Session::get('session')["id"];
@@ -488,6 +492,8 @@ public function forgot_password(Request $request){
          $user_id= Users::where("email", $email)->get()[0]->id;
          Tokens::create(compact("user_id", "token"));
         $data = array('link'=>"http://152.70.56.180:9001/reset_password/".$token);
+         
+         //send mail to user for password reset 
          Mail::send('mail', $data, function($message) use ($email) {
          $message->to($email, 'My Articles')->subject
             ('Reset your password');
@@ -518,7 +524,7 @@ public function forgot_password(Request $request){
 // }
 
 
-  //controller__users
+  //
 public function  reset_password($token){
     if (Tokens::where('token', $token)->exists()){
         $user_id= Tokens::where("token", $token)->get()[0]->user_id;
