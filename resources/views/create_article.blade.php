@@ -16,7 +16,7 @@
 @if ($comment_count<3)
  <script>
              Swal.fire(
-                'In order to write an article, you must leave 3 comments.Your total number of comments:\n<h1 class="badge badge-primary">'+{{$comment_count}}+'</h1>',
+                'In order to write an article, you must leave 3 comments on 3 different articles.Your total number of comments:\n<h1 class="badge badge-primary">'+{{$comment_count}}+'</h1>',
                 '',
                 'warning'
                 )
@@ -61,9 +61,9 @@ location.href="/"
             <input class="form-control" name="foto" type="file" id="image"  />
             <div class="form-outline mb-4">
              <h3 id="word_count"></h3>
-            <label class="form-label" for="form4Example3">Text</label>
+            <label class="form-label" for="create_article">Text</label>
             
-              <textarea maxlength="5000" class="form-control" name="text" id="form4Example3" rows="15" >
+              <textarea maxlength="5000" class="form-control" name="text" id="create_article" rows="15" >
               </textarea>
                       @if($errors->any())
        <h5 class="alert-danger text-center">{{$errors->first('text')}}</h5>
@@ -130,7 +130,7 @@ location.href="/"
 
 @endisset
 
- $("textarea").keyup(function(){
+ $("#create_article").keyup(function(){
      target= 5000
      count= $(this).val().trim().length
      current= target- count
