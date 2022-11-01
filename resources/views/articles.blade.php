@@ -15,6 +15,11 @@
 }
 </style>
 
+
+{{-- test --}}
+
+
+{{-- test --}}
 <div class="container  mt-5 py-5" >
 
  {{-- search    --}}
@@ -71,13 +76,13 @@
               <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
               <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
               <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
-              <button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
+              <!--<button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>-->
             </div>
           
             <!-- The slideshow/carousel -->
             <div class="carousel-inner">
                 @php
-                $control=-1;
+                $control=0;
                 @endphp
                 @foreach ($titles as $title)
                 @php 
@@ -230,7 +235,7 @@
                  console.log(index);
             //   console.log(index.title)
               // $("#content").append(index.title+"<br>")
-              html=  '<div class="col col-md-8 mx-auto mt-5"><div class="card h-100"><div class="card-body"><h5><a class="text-decoration-none link-dark " href="/get_article/%s">%s</a></h5><div class="card-subtitle mt-5  "><table class="table table-responsive table table-sm float-end position-absolute bottom-0 end-0 w-auto"><tr><td class="table-info "> <i class="fa-sharp fa-solid fa-pen" style="color:red"></i><small >%s %s</small> </td><td class="table-secondary"><i class="fa-regular fa-newspaper" style="color:green"></i><small >%s</small></td></tr></table>'.format(index.id,index.title,index.get_user.firstname,index.get_user.firstname,index.get_category.category)
+              html=  '<div class="col col-md-8 mx-auto mt-5"><div class="card h-100"><div class="card-body"><h5><a class="text-decoration-none link-dark " href="/get_article/%s">%s</a></h5><div class="card-subtitle mt-5  "><table class="table table-responsive table table-sm float-end position-absolute bottom-0 end-0 w-auto"><tr><td class="table-info "> <i class="fa-sharp fa-solid fa-pen" style="color:red"></i><small >%s %s</small> </td><td class="table-secondary"><i class="fa-regular fa-newspaper" style="color:green"></i><small >%s</small></td></tr></table>'.format(index.id,index.title,index.get_user.firstname,index.get_user.lastname,index.get_category.category)
               if (index.status=="true"){
                 $("#content").append(html)
               }
@@ -271,7 +276,7 @@
         data.forEach(function(index){
           if (index.text?.includes(search) || index.title?.includes(search)){
             counter+=1;
-            html=  '<div class="col col-md-8 mx-auto mt-5"><div class="card h-100"><div class="card-body"><h5><a target="_blank" class="text-decoration-none link-dark " href="/get_article/%s/%s">%s</a></h5><div class="card-subtitle mt-5  "><table class="table table-responsive table table-sm float-end position-absolute bottom-0 end-0 w-auto"><tr><td class="table-info "> <i class="fa-sharp fa-solid fa-pen" style="color:red"></i><small >%s %s</small> </td><td class="table-secondary"><i class="fa-regular fa-newspaper" style="color:green"></i><small >%s</small></td></tr></table>'.format(index.id,search,index.title,index.get_user.firstname,index.get_user.firstname,index.get_category.category)
+            html=  '<div class="col col-md-8 mx-auto mt-5"><div class="card h-100"><div class="card-body"><h5><a target="_blank" class="text-decoration-none link-dark " href="/get_article/%s/%s">%s</a></h5><div class="card-subtitle mt-5  "><table class="table table-responsive table table-sm float-end position-absolute bottom-0 end-0 w-auto"><tr><td class="table-info "> <i class="fa-sharp fa-solid fa-pen" style="color:red"></i><small >%s %s</small> </td><td class="table-secondary"><i class="fa-regular fa-newspaper" style="color:green"></i><small >%s</small></td></tr></table>'.format(index.id,search,index.title,index.get_user.firstname,index.get_user.lastname,index.get_category.category)
               if (index.status=="true"){
                 $("#content").append(html)
               }
@@ -289,6 +294,6 @@
       })
     })
     </script>
-    
+
 
 @endsection
