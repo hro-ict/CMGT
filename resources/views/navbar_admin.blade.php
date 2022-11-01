@@ -4,27 +4,27 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <a class="navbar-brand" href="#"><img width="40px" height="40px" src="{{asset('images/article.png')}}"></a>
+        <a class="navbar-brand" href="/"><img width="40px" height="40px" src="{{asset('images/article.png')}}"></a>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">News</a>
+            <a class="nav-link text-primary fw-bold" aria-current="page" href="/">Articles</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About us</a>
+            <a class="nav-link text-primary fw-bold text-danger" href="/about_us">About us</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Contact</a>
+            <a class="nav-link text-primary fw-bold text-info" href="/contact" tabindex="-1" aria-disabled="true">Contact</a>
           </li>
           {{-- test --}}
 
-          <div class="dropdown p-0">
-            <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown">
+          <div class="dropdown p-0  border border-5  border-success bg-light">
+            <button type="button" class="btn  dropdown-toggle fw-bold text-black" data-bs-toggle="dropdown">
               Admin Panel
             </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{{ route('get_all_users') }}">All Users</a></li>
-              <li><a class="dropdown-item" href="{{ route('get_all_articles') }}">All Articles</a></li>
-              <li><a class="dropdown-item" href="{{ route('change_password') }}">Change Password</a></li>
+            <ul class="dropdown-menu ">
+              <li><a class="dropdown-item fw-bold text-danger" href="{{ route('get_all_users') }}">All Users</a></li>
+              <li><a class="dropdown-item fw-bold text-primary" href="{{ route('get_all_articles') }}">All Articles</a></li>
+              <li><a class="dropdown-item fw-bold text-info" href="/change_pass">Change Password</a></li>
             </ul>
           </div>
 
