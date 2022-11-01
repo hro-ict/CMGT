@@ -9,4 +9,3 @@
 @include('navbar2')
 @endif
 @yield('content')
-@include('footer')
