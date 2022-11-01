@@ -13,6 +13,9 @@ use App\Models\Tokens;
 use Illuminate\Support\Facades\Hash;
 use Mail;
 
+
+use Carbon\Carbon;
+
 class News extends Controller
 {
     public function index() {
@@ -150,14 +153,17 @@ class News extends Controller
   //controller__articles
     public function write_article(){
         $all_comments= [];
-        if (Session::has('session')){
+        if (Session::has('session')&& Session::get('session')["role"]!="admin" ){
          $comment_count= Users::find(Session::get('session')['id'])->get_user_comments->count();
          $comments= Users::find(Session::get('session')['id'])->get_user_comments;
-         if ($comment_count>2){
+
+         if ($comment_count>0){
              foreach($comments as $comment){
             array_push($all_comments, $comment->article_id);
+            
          } 
          return view("create_article", ["comment_count"=> count(array_unique($all_comments))]);
+         
          }
           else {
              return view("create_article", ["comment_count"=> $comment_count]);
@@ -302,11 +308,11 @@ class News extends Controller
         $user_email= Articles::find($id)->get_user->email;
         $name= Articles::find($id)->get_user->lastname;
         $title= Articles::find($id)->title;
-        
-      
  
         $status= $request->status;
       
+      
+        //check query
         $result= Articles::where('id', $id)->update([
                "status"=>$status
                ]);
@@ -352,7 +358,7 @@ class News extends Controller
 
   //controller__articles
     public function get_user_articles($username){
-        if (Session::has('session')){
+        if (Session::has('session')&& Session::get('session')["role"]!="admin"){
             $user_id= Session::get('session')["id"];
             $articles= Users::find($user_id)->get_user_articles;
             return view('user_articles_2', ["articles"=>$articles]);
@@ -441,15 +447,24 @@ public function get_category(Request $request){
 
   //controller__users
 public function delete_user(Request $request){
+   $id= $request->id;
+
+   
+
+   
   if($request->id){
     $id= $request->id;
     $query= Users::where('id', $id)->delete();
+    Comments::where("user_id", $id)->delete();
+    Articles::where("user_id", $id)->delete();
      return $query;
   }
   else {
       if (Session::has('session')){
           $id= Session::get('session')["id"];
            $query= Users::where('id', $id)->delete();
+           Comments::where("user_id", $id)->delete();
+           Articles::where("user_id", $id)->delete();
            if ($query==1){
                Session::forget("session");
                return $query;
@@ -555,11 +570,8 @@ public function update_password(Request $request){
 }
 
 public function db_test (){
-    $a= Articles::find(13)->get_comments;
-    foreach ($a as $b){
-        echo $b->comment;
-    }
-    // $users= Users::paginate(5);
+    $users= Articles::with("get_user")->get();
+    return response()->json($users);
     // print_r($users);die();
     // return view('db_test', ["users"=>$users]);
     //return md5("admin.2022");
@@ -575,6 +587,21 @@ public function db_test (){
     // foreach ($articles as $article){
     //     print_r($article->title);
     // }
+}
+
+
+public function post_test (Request $request) {
+    // $req= $request->postName;
+    // return response()->json(["message"=>$req]);
+  
+    $users= Users::all()->first();
+    // return response()->json($users);
+    $carb= Carbon::parse($users->created_at)->format("d M l y h:m ");
+    return $carb;
+    // print_r($users);
+    
+    
+    
 }
 
 
