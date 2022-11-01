@@ -20,6 +20,7 @@ class Articles extends Model
         return $this->belongsTo(Categories::class, "category_id");
     }
     
+    
      public function get_comment(){
         return $this->belongsTo(Comments::class, "article_id");
     }
