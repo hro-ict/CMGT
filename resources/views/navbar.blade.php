@@ -1,13 +1,25 @@
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Articles</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<body>
+</head>
+<body>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand" href="#"><img width="40px" height="40px" src="{{asset('images/article.png')}}"></a>
+            <a class="navbar-brand" href="#"><img width="40px" height="40px" src="images/article.png"></a>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">News</a>
+                <a class="nav-link active" aria-current="page" href="{{route('articles')}}">News</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">About us</a>
@@ -18,18 +30,17 @@
             </ul>
           
 
-              @if (Session::has("session"))
-              <div >
-              <img class="rounded-circle " width="50px" height="50px" src="{{asset('images/'.Session::get("session")["foto"])}}">
-              <a class="nav-link me-2  d-inline-block" href="/login">Hi, {{Session::get("session")["username"]}}</a></div>
-              <a class="nav-link me-2" href="{{route('logout')}}"><img class="rounded-circle " width="50px" height="50px" src="{{asset('images/logout.png')}}"></a>
-              @else
-              <a class="nav-link me-2" href="/login">Login</a>
-              <a class="nav-link me-2" href="/register">Register</a>
-              @endif
+          
+              <a class="nav-link me-2" href="{{route('login')}}">Login</a>
+              <a class="nav-link me-2" href="{{route('register')}}">Register</a>';
 
-        
+           
+    
+    
+           
            
           </div>
         </div>
       </nav>  
+</body>
+</html>
