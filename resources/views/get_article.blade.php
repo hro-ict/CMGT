@@ -272,7 +272,6 @@ $('.delete_comment').submit( function(ev) {
     instance.mark('{{$search}}')
     @endisset
   </script>
-
           
 @endsection
          
