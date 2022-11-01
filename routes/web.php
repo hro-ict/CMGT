@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\News;
+use App\Http\Controllers\Users;
+use App\Http\Controllers\Articles;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,7 @@ use App\Http\Controllers\News;
 Route::get("/db_test",[News::class, 'db_test'])->name('db_test');
 
 Route::get("/test_cat",[News::class, 'test_cat'])->name('test_cat');
+Route::get("/post_test",[News::class, 'post_test'])->name('post_test');
 //TEST ROUTES
 
 
