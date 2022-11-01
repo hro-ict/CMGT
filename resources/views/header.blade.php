@@ -18,7 +18,26 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
 
- 
+<!--toogle_switch-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+
+  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
+<!--toogle_switch-->
+
+
+</script>
+
+
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+ </head>
 <body>
-</head>
+
+
+
+
+
+
+
 <body>
