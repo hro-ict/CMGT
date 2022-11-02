@@ -126,6 +126,7 @@ class News extends Controller
              "username"=>"required|unique:users|min:4|max:15",
             //  "foto"=>"mimes:jpeg,jpg,png,webp"
             // "foto"=>"image|mimes:jpeg,png,jpg,gif,webp"
+           'foto'=> 'image|mimes:jpg,png,jpeg,gif,svg, webp|max:1024'
          
 
              ]);
